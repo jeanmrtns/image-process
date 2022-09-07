@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/bmp.h
+
+../include/showheader.h
+
+/home/PUCMINAS/1241855/Downloads/TOP2/lib/showheader.c
+stdio.h
+-
+stdlib.h
+-
+limits.h
+-
+bmp.h
+/home/PUCMINAS/1241855/Downloads/TOP2/lib/bmp.h
+showheader.h
+/home/PUCMINAS/1241855/Downloads/TOP2/lib/showheader.h
+

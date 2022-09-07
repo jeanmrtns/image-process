@@ -1,41 +1,43 @@
-# Código de exemplo para propósito acadêmico
-## Simples implementação C de uma calculadora
+# Cï¿½digo de exemplo para propï¿½sito acadï¿½mico
+## Simples implementaï¿½ï¿½o C de uma calculadora
 ## estruturada em forma de projeto
 
 Autor: Prof. Claudio Correa
 
+
+
 ## Resumo
 
-Esse é um exemplo de implementação de uma calculadora
-para as quatro operações aritméticas básicas, escrita 
-em linguagem C, com o propósito de ilustrar a estrutura 
-de desenvolvimento do projeto organizada em diretórios:
+Esse ï¿½ um exemplo de implementaï¿½ï¿½o de uma calculadora
+para as quatro operaï¿½ï¿½es aritmï¿½ticas bï¿½sicas, escrita 
+em linguagem C, com o propï¿½sito de ilustrar a estrutura 
+de desenvolvimento do projeto organizada em diretï¿½rios:
 
 . include
 . lib
 . src
 
-São disponibilizados recursos para gerar, automaticamente, 
-os objetos para preparar uma biblioteca estática, compilar 
-o código principal e ligar com a biblioteca para gerar o
-executável final.
+Sï¿½o disponibilizados recursos para gerar, automaticamente, 
+os objetos para preparar uma biblioteca estï¿½tica, compilar 
+o cï¿½digo principal e ligar com a biblioteca para gerar o
+executï¿½vel final.
 
 O procedimento pode ser realizado por meio das ferramentas
-make (com auxílio do Makefile) e cmake (com auxílio do 
+make (com auxï¿½lio do Makefile) e cmake (com auxï¿½lio do 
 CMakeLists.txt)
 
-IMPORTANTE: o código principal (<it>main()</it>) está em src
+IMPORTANTE: o cï¿½digo principal (<it>main()</it>) estï¿½ em src
 
 ## make
 
-Duas formas simples de gerar o executável:
+Duas formas simples de gerar o executï¿½vel:
 
 <ul>
-  <li>make calc</li>: compilação tradicional (sem gerar a biblioteca)</li>
-  <li>make</li>: gera os objetos, a biblioteca estática e então, o executável</li>
+  <li>make calc</li>: compilaï¿½ï¿½o tradicional (sem gerar a biblioteca)</li>
+  <li>make</li>: gera os objetos, a biblioteca estï¿½tica e entï¿½o, o executï¿½vel</li>
 </ul>
 
-## cmake básico
+## cmake bï¿½sico
 ### Ref.: <a href="https://cmake.org/examples">https://cmake.org/examples</a>
 <ul>
   <li>	cmake -S . -B build</li>
@@ -49,11 +51,11 @@ Duas formas simples de gerar o executável:
   <li>	make test && doas make install/strip</li>
 </ul>
 
-A imagem apresenta a estrutura de diretórios:
+A imagem apresenta a estrutura de diretï¿½rios:
  
  <img src="images/calcdirs.png">
  
-## Descrição dos arquivos
+## Descriï¿½ï¿½o dos arquivos
 
 CMakeLists.txt
 Makefile

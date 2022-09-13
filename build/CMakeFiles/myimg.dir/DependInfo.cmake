@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/PUCMINAS/1241855/Downloads/TOP2/lib/showheader.c" "/home/PUCMINAS/1241855/Downloads/TOP2/build/CMakeFiles/myimg.dir/lib/showheader.c.o"
+  "/home/ulysses/image-process/lib/showheader.c" "/home/ulysses/image-process/build/CMakeFiles/myimg.dir/lib/showheader.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

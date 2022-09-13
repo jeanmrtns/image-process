@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <math.h>
 
 #include "bmp.h"
 #include "showheader.h"
@@ -74,8 +75,8 @@ int main(void) {
 
 	/* BMP (Windows) header */
 	printf("\nBMP (Windows) header\n");
-	printhd(&hd);
-	printinfohd(&infohd);
+	// printhd(&hd);
+	// printinfohd(&infohd);
 
 	if (infohd.bits <= HDRBD) {
 		fread(colorTable, sizeof(unsigned char), HBMPCT, streamIn);
@@ -96,8 +97,31 @@ int main(void) {
 		perror("malloc()");
                 exit(EXIT_FAILURE);
 	}
-
+	int borda = 10;
 	fread(buf, sizeof(unsigned char), sz, streamIn);
+	for (i = 0; i < 512*512; i++) {
+		if(i <= 512*borda){
+			buf[i] = 255;
+		}else if(i >= 512*502){
+			buf[i] = 255;
+		}else if(i > 512*borda && i < 512*502){
+			// int linha = ceil(i/512);
+			// if(i <= (512*linha)-(512-borda)){
+			// 	buf[i] = 255;
+			// }
+		}
+	}
+	// int i;
+	// int j;
+	// unsigned char matriz[512][512];
+	// for (i=0; i<512; ++i)
+	// 	for (j=0; j<512; ++j)
+	// 		matriz[i][j] = buf[i+j];
+
+	// for (i=0; i<10; ++i){
+	// 	for (j=0; j<512; ++j)
+	// 		matriz[i][j] = 1;
+  // }
 
 	fo = fopen(out, "wb");			/* Open the file */
 	if (fo == NULL) {
@@ -140,7 +164,7 @@ typedef struct {
 */
 
 /**************************/
-/* Versão compacta:       */
+/* Versï¿½o compacta:       */
 /* *x ^= *y ^= *x^ = *y;  */
 /**************************/
 

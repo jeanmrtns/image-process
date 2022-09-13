@@ -10,7 +10,7 @@
 
 ../include/showheader.h
 
-/home/PUCMINAS/1241855/Downloads/TOP2/lib/showheader.c
+/home/ulysses/image-process/lib/showheader.c
 stdio.h
 -
 stdlib.h
@@ -18,7 +18,7 @@ stdlib.h
 limits.h
 -
 bmp.h
-/home/PUCMINAS/1241855/Downloads/TOP2/lib/bmp.h
+/home/ulysses/image-process/lib/bmp.h
 showheader.h
-/home/PUCMINAS/1241855/Downloads/TOP2/lib/showheader.h
+/home/ulysses/image-process/lib/showheader.h
 

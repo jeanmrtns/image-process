@@ -10,15 +10,17 @@
 
 ../include/showheader.h
 
-/home/PUCMINAS/1241855/Downloads/TOP2/src/principal.c
+/home/ulysses/image-process/src/principal.c
 stdio.h
 -
 stdlib.h
 -
 limits.h
 -
+math.h
+-
 bmp.h
-/home/PUCMINAS/1241855/Downloads/TOP2/src/bmp.h
+/home/ulysses/image-process/src/bmp.h
 showheader.h
-/home/PUCMINAS/1241855/Downloads/TOP2/src/showheader.h
+/home/ulysses/image-process/src/showheader.h
 

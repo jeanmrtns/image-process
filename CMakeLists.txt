@@ -58,14 +58,14 @@ add_executable(img ${SOURCES})
 target_link_libraries(img myimg)
 
 # ls -1 lib/*.c
-add_library(myimg STATIC lib/showheader.c lib/showheader.c)
+add_library(myimg STATIC lib/showheader.c lib/showheader.c lib/border.c)
 # add_library(mycalc SHARED lib/funcoesarit.c lib/funcoesaux.c)
 
 set_target_properties(myimg PROPERTIES
     OUTPUT_NAME myimg
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
-    PUBLIC_HEADER include/bmp.h)
+    PUBLIC_HEADER include/*.h)
 
 target_include_directories(myimg PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

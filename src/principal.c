@@ -5,6 +5,7 @@
 
 #include "bmp.h"
 #include "showheader.h"
+#include "border.h"
 
 /* Compilar com:
  	clang -Wall -std=c11 -O2 showheader.c -o showheader
@@ -97,31 +98,25 @@ int main(void) {
 		perror("malloc()");
                 exit(EXIT_FAILURE);
 	}
-	int borda = 10;
 	fread(buf, sizeof(unsigned char), sz, streamIn);
-	for (i = 0; i < 512*512; i++) {
-		if(i <= 512*borda){
-			buf[i] = 255;
-		}else if(i >= 512*502){
-			buf[i] = 255;
-		}else if(i > 512*borda && i < 512*502){
-			// int linha = ceil(i/512);
-			// if(i <= (512*linha)-(512-borda)){
-			// 	buf[i] = 255;
-			// }
-		}
-	}
-	// int i;
-	// int j;
-	// unsigned char matriz[512][512];
-	// for (i=0; i<512; ++i)
-	// 	for (j=0; j<512; ++j)
-	// 		matriz[i][j] = buf[i+j];
 
-	// for (i=0; i<10; ++i){
-	// 	for (j=0; j<512; ++j)
-	// 		matriz[i][j] = 1;
-  // }
+	int j;
+	unsigned char matriz[infohd.height][infohd.width];
+	for (i=0; i<infohd.height; ++i)
+		for (j=0; j<infohd.width; ++j)
+			matriz[i][j] = buf[i*infohd.width+j];
+
+	int borda = 10;
+	set_border(borda, infohd.width, infohd.height, matriz);
+	// for (i=0; i<512; ++i){
+	// 	for (j=0; j<512; ++j){
+	// 		if (i <= borda || (i >= 501) ) {
+	// 			matriz[i][j] = 255;
+	// 		} else if (j <= borda || (j >= 501)) {
+	// 			matriz[i][j] = 255;
+	// 		}
+	// 	}
+	// }
 
 	fo = fopen(out, "wb");			/* Open the file */
 	if (fo == NULL) {
@@ -136,7 +131,7 @@ int main(void) {
 		fwrite(colorTable, sizeof(unsigned char), HBMPCT, fo);
 	}
 
-	fwrite(buf, sizeof(unsigned char), sz, fo);
+	fwrite(matriz, sizeof(unsigned char), sz, fo);
 
 	fclose(fo);
 	fclose(streamIn);

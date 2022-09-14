@@ -1,1 +1,1 @@
-void set_border(int border_width, int width, int height, unsigned char matriz[width][height]);
+void set_border(int width, int height, unsigned char matriz[width][height]);

@@ -1,7 +1,11 @@
 #include "border.h"
 
-void set_border(int border_width, int width, int height, unsigned char matriz[width][height]){
-    int i,j;
+void set_border(int width, int height, unsigned char matriz[width][height]){
+    int i,j, border_width;
+
+		printf("Insira o tamanho da borda: ");
+		scanf("%d", &border_width);
+
     for (i=0; i<height; ++i){
 		for (j=0; j<width; ++j){
 			if (i <= border_width || (i >= (height-border_width)) ) {

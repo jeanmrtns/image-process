@@ -42,6 +42,7 @@ int main(void) {
 
 	char fname[] = "./lena512.bmp";
 	char out[] = "./saida.bmp";
+
 	unsigned char *buf;
 
 	FILE *streamIn, *fo;
@@ -54,14 +55,6 @@ int main(void) {
 		perror("fopen()");
 		exit(EXIT_FAILURE);
 	}
-
-        /* Reading the bitmap file header struct */
-        // fread(&hd, sizeof(bmpheader), 1, streamIn);
-	// if (hd.type != 0x4D42) {fclose(streamIn); exit(EXIT_FAILURE);}
-        /* Reading the bitmap info header struct */
-        // fread(&infohd, sizeof(bmpinfoheader), 1, streamIn);
-        // Moving the file pointer to the beginning of bitmap data
-        // fseek(streamIn, hd.offset, SEEK_SET);
 
 	for (i = 0; i < HDRBMP; i++) {
 		header[i] = getc(streamIn);				/* Strip out BMP header, byte-wise */
@@ -106,17 +99,28 @@ int main(void) {
 		for (j=0; j<infohd.width; ++j)
 			matriz[i][j] = buf[i*infohd.width+j];
 
-	int borda = 10;
-	set_border(borda, infohd.width, infohd.height, matriz);
-	// for (i=0; i<512; ++i){
-	// 	for (j=0; j<512; ++j){
-	// 		if (i <= borda || (i >= 501) ) {
-	// 			matriz[i][j] = 255;
-	// 		} else if (j <= borda || (j >= 501)) {
-	// 			matriz[i][j] = 255;
-	// 		}
-	// 	}
-	// }
+	int filtro = 0;
+	printf("\nFiltros disponíveis:");
+	printf("\n1 - Aplicar borda");
+	printf("\n2 - Efeito negativo");
+
+	printf("\nQual filtro deseja aplicar? -> ");
+	scanf("%d", &filtro);
+	
+	switch(filtro) {
+		case 1:
+			set_border(infohd.width, infohd.height, matriz);
+			printf("\nBorda aplicada!\n");
+			break;
+		case 2:
+			negative(infohd.width, infohd.height, matriz);
+			printf("\nFiltro negativo aplicado!\n");
+			break;
+		default:
+			printf("\nSaindo do programa...");
+			exit(1);
+			break;
+	}
 
 	fo = fopen(out, "wb");			/* Open the file */
 	if (fo == NULL) {

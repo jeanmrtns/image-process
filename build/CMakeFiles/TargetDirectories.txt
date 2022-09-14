@@ -1,8 +1,0 @@
-/home/ulysses/image-process/build/CMakeFiles/install/local.dir
-/home/ulysses/image-process/build/CMakeFiles/install.dir
-/home/ulysses/image-process/build/CMakeFiles/list_install_components.dir
-/home/ulysses/image-process/build/CMakeFiles/rebuild_cache.dir
-/home/ulysses/image-process/build/CMakeFiles/edit_cache.dir
-/home/ulysses/image-process/build/CMakeFiles/install/strip.dir
-/home/ulysses/image-process/build/CMakeFiles/myimg.dir
-/home/ulysses/image-process/build/CMakeFiles/img.dir

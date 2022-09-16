@@ -1,4 +1,4 @@
-# Author: Claudio Correa, 2021/05/15
+# Autores: Jean Martins, Lucas Paiva, Ulysses Henrique
 
 # https://cmake.org/examples
 # cmake -S . -B build

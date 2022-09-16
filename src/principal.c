@@ -110,7 +110,6 @@ int main(void) {
 	int filtro = 0;
 	printf("\nFiltros disponíveis:");
 	printf("\n1 - Aplicar borda");
-	printf("\n2 - Efeito negativo");
 
 	printf("\nQual filtro deseja aplicar? -> ");
 	scanf("%d", &filtro);
@@ -120,16 +119,11 @@ int main(void) {
 			set_border(infohd.width, infohd.height, matriz);
 			printf("\nBorda aplicada!\n");
 			break;
-		case 2:
-			negative(infohd.width, infohd.height, matriz);
-			printf("\nFiltro negativo aplicado!\n");
-			break;
 		default:
 			printf("\nSaindo do programa...");
 			exit(1);
 			break;
 	}
-	printf("\nescrevendo no arquivo %s\n", out);
 	fo = fopen(strcat(out, ext), "wb");			/* Open the file */
 	if (fo == NULL) {
 		perror("fopen()");
@@ -144,6 +138,7 @@ int main(void) {
 	}
 
 	fwrite(matriz, sizeof(unsigned char), sz, fo);
+	printf("Salvando no arquivo %s...\n", out);
 
 	fclose(fo);
 	fclose(streamIn);

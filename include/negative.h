@@ -1,1 +1,0 @@
-void negative(int width, int height, unsigned char matriz[width][height]);

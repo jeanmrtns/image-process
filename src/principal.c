@@ -40,8 +40,16 @@ int main(void) {
 	unsigned char header[HDRBMP] = {0};	/* To store the image header */
 	unsigned char colorTable[HBMPCT] = {0};	/* To store the colorTable, if it exists */
 
-	char fname[] = "./lena512.bmp";
-	char out[] = "./saida.bmp";
+	char fname[50];
+	char out[50];
+	char ext[5] = ".bmp";
+
+	printf("Digite o nome do arquivo (sem a extensao): ");
+	scanf("%s", &fname);
+	getchar();
+	printf("Digite o nome de saida do arquivo (sem a extensao): ");
+	scanf("%s", &out);
+	getchar();
 
 	unsigned char *buf;
 
@@ -50,7 +58,7 @@ int main(void) {
 	unsigned int i;
 	double sz;
 
-	streamIn = fopen(fname, "rb");		/* Open the file */
+	streamIn = fopen(strcat(fname, ext), "rb");		/* Open the file */
 	if (streamIn == NULL) {
 		perror("fopen()");
 		exit(EXIT_FAILURE);
@@ -68,7 +76,7 @@ int main(void) {
 	getinfohd(header, &infohd);
 
 	/* BMP (Windows) header */
-	printf("\nBMP (Windows) header\n");
+	// printf("\nBMP (Windows) header\n");
 	// printhd(&hd);
 	// printinfohd(&infohd);
 
@@ -121,8 +129,8 @@ int main(void) {
 			exit(1);
 			break;
 	}
-
-	fo = fopen(out, "wb");			/* Open the file */
+	printf("\nescrevendo no arquivo %s\n", out);
+	fo = fopen(strcat(out, ext), "wb");			/* Open the file */
 	if (fo == NULL) {
 		perror("fopen()");
 		exit(EXIT_FAILURE);

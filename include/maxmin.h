@@ -1,0 +1,1 @@
+void maxmin(unsigned char *array, int tam);

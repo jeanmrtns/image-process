@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-// #include <sys/limits.h>
 #include "bmp.h"
-/*
-#include "showheader.h"
-*/
 
 /* Funcoes */
 int gethd(unsigned char *header, bmpheader *hd) {
@@ -58,6 +54,11 @@ void printinfohd(bmpinfoheader *infohd) {
 	printf("\nNumber of colours: %u", infohd->ncolours);
 	printf("\nImportant colours: %u\n\n", infohd->importantcolours);
 	return;
+}
+
+void verifyDataLength(bmpinfoheader *infohd, FILE *file) {
+	if ((infohd->width * infohd->height) - 54 - 1024 > sizeof(file)) return;
+	else exit(1);
 }
 
 /* Bitmap BGR to bitmap RGB (swaping R and B values) */

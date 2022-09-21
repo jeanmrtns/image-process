@@ -5,3 +5,4 @@ void getinfohd(unsigned char [], bmpinfoheader *);
 void printhd(bmpheader *);
 void printinfohd(bmpinfoheader *);
 
+void verifyDataLength(bmpinfoheader *infohd, FILE *file);

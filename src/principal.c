@@ -6,31 +6,13 @@
 #include "bmp.h"
 #include "showheader.h"
 #include "border.h"
+#include "menu.h"
+#include "maxmin.h"
 
 /* Compilar com:
  	clang -Wall -std=c11 -O2 showheader.c -o showheader
 
-        clang -Wall src/principal.c lib/showheader.c -I./include -o executavel
- */
-/*
-   Header:
-   offset	size	description
-   0		2	signature, must be 4D42 hex
-   2		4	size of BMP file in bytes (unreliable)
-   6		2	reserved, must be zero
-   8		2	reserved, must be zero
-   10		4	offset to start of image data in bytes
-   14		4	size of BITMAPINFOHEADER structure, must be 40
-   18		4	image width in pixels
-   22		4	image height in pixels
-   26		2	number of planes in the image, must be 1
-   28		2	number of bits per pixel (1, 4, 8, or 24)
-   30		4	compression type (0=none, 1=RLE-8, 2=RLE-4)
-   34		4	size of image data in bytes (including padding)
-   38		4	horizontal resolution in pixels per meter (unreliable)
-   42		4	vertical resolution in pixels per meter (unreliable)
-   46		4	number of colors in image, or zero
-   50		4	number of important colors, or zero
+	clang -Wall src/principal.c lib/showheader.c -I./include -o executavel
 */
 
 int main(void) {
@@ -75,11 +57,6 @@ int main(void) {
 	}
 	getinfohd(header, &infohd);
 
-	/* BMP (Windows) header */
-	// printf("\nBMP (Windows) header\n");
-	// printhd(&hd);
-	// printinfohd(&infohd);
-
 	if (infohd.bits <= HDRBD) {
 		fread(colorTable, sizeof(unsigned char), HBMPCT, streamIn);
 	}
@@ -108,11 +85,9 @@ int main(void) {
 			matriz[i][j] = buf[i*infohd.width+j];
 
 	int filtro = 0;
-	printf("\nFiltros disponíveis:");
-	printf("\n1 - Aplicar borda");
-	printf("\n2 - Efeito negativo");
-
-	printf("\nQual filtro deseja aplicar? -> ");
+	verifyDataLength(&infohd, streamIn);
+	maxmin(buf, sz);
+	exibirMenu();
 	scanf("%d", &filtro);
 	
 	switch(filtro) {

@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "maxmin.h"
 
 void maxmin(unsigned char *array, int tam) {

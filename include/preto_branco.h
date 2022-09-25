@@ -1,0 +1,1 @@
+void preto_branco(int width, int height, unsigned char matriz[width][height]);

@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-#include <math.h>
+#include <string.h>
 
 #include "bmp.h"
 #include "showheader.h"
 #include "border.h"
 #include "menu.h"
 #include "maxmin.h"
+#include "preto_branco.h"
 
 /* Compilar com:
  	clang -Wall -std=c11 -O2 showheader.c -o showheader
@@ -99,12 +100,16 @@ int main(void) {
 			negative(infohd.width, infohd.height, matriz);
 			printf("\nFiltro negativo aplicado!\n");
 			break;
+		case 3:
+			preto_branco(infohd.width, infohd.height, matriz);
+			printf("\nFiltro preto e branco aplicado!\n");
+			break;
 		default:
 			printf("\nSaindo do programa...");
 			exit(1);
 			break;
 	}
-	printf("\nescrevendo no arquivo %s\n", out);
+	printf("\nEscrevendo no arquivo %s\n", out);
 	fo = fopen(strcat(out, ext), "wb");			/* Open the file */
 	if (fo == NULL) {
 		perror("fopen()");

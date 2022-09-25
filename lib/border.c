@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "border.h"
 
 void set_border(int width, int height, unsigned char matriz[width][height]){

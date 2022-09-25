@@ -9,6 +9,7 @@
 #include "menu.h"
 #include "maxmin.h"
 #include "preto_branco.h"
+#include "brilho.h"
 
 /* Compilar com:
  	clang -Wall -std=c11 -O2 showheader.c -o showheader
@@ -28,10 +29,10 @@ int main(void) {
 	char ext[5] = ".bmp";
 
 	printf("Digite o nome do arquivo (sem a extensao): ");
-	scanf("%s", &fname);
+	scanf("%s", fname);
 	getchar();
 	printf("Digite o nome de saida do arquivo (sem a extensao): ");
-	scanf("%s", &out);
+	scanf("%s", out);
 	getchar();
 
 	unsigned char *buf;
@@ -102,6 +103,10 @@ int main(void) {
 			break;
 		case 3:
 			preto_branco(infohd.width, infohd.height, matriz);
+			printf("\nFiltro preto e branco aplicado!\n");
+			break;
+		case 4:
+			brilho(infohd.width, infohd.height, matriz);
 			printf("\nFiltro preto e branco aplicado!\n");
 			break;
 		default:

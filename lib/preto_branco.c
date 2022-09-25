@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "preto_branco.h"
 
 void preto_branco(int width, int height, unsigned char matriz[width][height]){

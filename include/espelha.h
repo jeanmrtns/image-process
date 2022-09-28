@@ -1,0 +1,1 @@
+void espelha(int width, int height, unsigned char matriz[width][height]);

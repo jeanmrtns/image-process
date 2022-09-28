@@ -1,0 +1,1 @@
+void gira90(int width, int height, unsigned char matriz[width][height]);

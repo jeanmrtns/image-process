@@ -10,6 +10,11 @@
 #include "maxmin.h"
 #include "preto_branco.h"
 #include "brilho.h"
+#include "gira180.h"
+#include "espelha.h"
+#include "gira90.h"
+
+// Alunos: Jean, Lucas e Ulysses 
 
 /* Compilar com:
  	clang -Wall -std=c11 -O2 showheader.c -o showheader
@@ -87,49 +92,76 @@ int main(void) {
 			matriz[i][j] = buf[i*infohd.width+j];
 
 	int filtro = 0;
+	int sair = 1;
 	verifyDataLength(&infohd, streamIn);
 	maxmin(buf, sz);
-	exibirMenu();
-	scanf("%d", &filtro);
 	
-	switch(filtro) {
-		case 1:
-			set_border(infohd.width, infohd.height, matriz);
-			printf("\nBorda aplicada!\n");
-			break;
-		case 2:
-			negative(infohd.width, infohd.height, matriz);
-			printf("\nFiltro negativo aplicado!\n");
-			break;
-		case 3:
-			preto_branco(infohd.width, infohd.height, matriz);
-			printf("\nFiltro preto e branco aplicado!\n");
-			break;
-		case 4:
-			brilho(infohd.width, infohd.height, matriz);
-			printf("\nFiltro preto e branco aplicado!\n");
-			break;
-		default:
-			printf("\nSaindo do programa...");
-			exit(1);
-			break;
+	while(sair == 1) {
+		exibirMenu();
+		scanf("%d", &filtro);
+		
+		switch(filtro) {
+			case 0:
+				sair = 0;
+				printf("Saindo do programa\n");
+				break;
+			case 1:
+				set_border(infohd.width, infohd.height, matriz);
+				printf("\nBorda aplicada!\n");
+				break;
+			case 2:
+				negative(infohd.width, infohd.height, matriz);
+				printf("\nFiltro negativo aplicado!\n");
+				break;
+			case 3:
+				preto_branco(infohd.width, infohd.height, matriz);
+				printf("\nFiltro preto e branco aplicado!\n");
+				break;
+			case 4:
+				brilho(infohd.width, infohd.height, matriz);
+				printf("\nFiltro de brilho aplicado!\n");
+				break;
+			case 5:
+				gira180(infohd.width, infohd.height, matriz);
+				printf("\nImagem rotacionada!\n");
+				break;
+			case 6:
+				espelha(infohd.width, infohd.height, matriz);
+				printf("\nImagem espelhada!\n");
+				break;
+			case 7:
+				gira90(infohd.width, infohd.height, matriz);
+				printf("\nImagem rotacionada em 90 graus!\n");
+				break;
+			default:
+				printf("\nOpção invalida\n");
+				break;
+		}
+
+		printf("\nEscrevendo no arquivo %s\n", out);
+		if (strstr(out, ext) != NULL) {
+			fo = fopen(out, "wb");
+		}
+		
+		else {
+			fo = fopen(strcat(out, ext), "wb");			/* Open the file */
+		}
+
+		if (fo == NULL) {
+			perror("fopen()");
+			exit(EXIT_FAILURE);
+		}
+
+		/* Write the image header to output file */
+		fwrite(header, sizeof(unsigned char), HDRBMP, fo);
+
+		if (infohd.bits <= 8) {
+			fwrite(colorTable, sizeof(unsigned char), HBMPCT, fo);
+		}
+
+		fwrite(matriz, sizeof(unsigned char), sz, fo);
+
 	}
-	printf("\nEscrevendo no arquivo %s\n", out);
-	fo = fopen(strcat(out, ext), "wb");			/* Open the file */
-	if (fo == NULL) {
-		perror("fopen()");
-		exit(EXIT_FAILURE);
-	}
-
-	/* Write the image header to output file */
-	fwrite(header, sizeof(unsigned char), HDRBMP, fo);
-
-	if (infohd.bits <= 8) {
-		fwrite(colorTable, sizeof(unsigned char), HBMPCT, fo);
-	}
-
-	fwrite(matriz, sizeof(unsigned char), sz, fo);
-
 	fclose(fo);
 	fclose(streamIn);
 

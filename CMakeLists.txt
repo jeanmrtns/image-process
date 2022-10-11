@@ -1,4 +1,4 @@
-# Author: Claudio Correa, 2021/05/15
+# Alunos: Jean, Lucas e Ulysses 
 
 # https://cmake.org/examples
 # cmake -S . -B build

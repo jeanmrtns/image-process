@@ -13,6 +13,7 @@
 #include "gira180.h"
 #include "espelha.h"
 #include "gira90.h"
+#include "pgm.h"
 
 // Alunos: Jean, Lucas e Ulysses 
 
@@ -32,6 +33,25 @@ int main(void) {
 	char fname[50];
 	char out[50];
 	char ext[5] = ".bmp";
+
+	printf("PGM ou BMP? (1 ou 2)\n");
+	int choice;
+	scanf("%d", &choice);
+	getchar();
+	
+	if (choice == 1) {
+		PGMImage img;
+		printf("insira o nome do arquivo se for PGM\n");
+		char fnamePgm[50];
+		char pgmOut[50];
+		scanf("%s", fname);
+		getchar();
+
+		getPGMfile(fname, &img);
+		save(&img, "saida.pgm");
+
+		exit(1);
+	}
 
 	printf("Digite o nome do arquivo (sem a extensao): ");
 	scanf("%s", fname);

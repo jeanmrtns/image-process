@@ -58,7 +58,7 @@ add_executable(img ${SOURCES})
 target_link_libraries(img myimg)
 
 # ls -1 lib/*.c
-add_library(myimg STATIC lib/showheader.c lib/border.c lib/negative.c lib/menu.c lib/maxmin.c lib/preto_branco.c lib/brilho.c lib/gira180.c lib/espelha.c lib/gira90.c)
+add_library(myimg STATIC lib/showheader.c lib/border.c lib/negative.c lib/menu.c lib/maxmin.c lib/preto_branco.c lib/brilho.c lib/gira180.c lib/espelha.c lib/gira90.c lib/pgm.c)
 # add_library(mycalc SHARED lib/funcoesarit.c lib/funcoesaux.c)
 
 set_target_properties(myimg PROPERTIES

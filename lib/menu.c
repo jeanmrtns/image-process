@@ -19,6 +19,7 @@ void exibirMenuFormatos(){
 	printf("\nFormatos disponíveis:");
 	printf("\n1 - PGM");
 	printf("\n2 - BMP");
+	printf("\n3 - BMP RGB");
 	printf("\nQual formato deseja utilizar? -> ");
 }
 
@@ -29,4 +30,12 @@ void exibirMenuPGM(){
 	printf("3 -> girar 180\n");
 	printf("0 -> Para sair do programa\n");
 	printf("\nQual rotacao deseja aplicar? -> ");
+}
+
+void exibirMenuRGB(){
+	printf("\nRotacoes:\n");
+	printf("1 -> Efeito preto e branco\n");
+	printf("2 -> Efeito sepia\n");
+	printf("0 -> Para sair do programa\n");
+	printf("\nQual efeito deseja aplicar? -> ");
 }

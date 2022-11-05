@@ -1,0 +1,1 @@
+void rgb_to_gray(int width, int height, unsigned char buf[width*height][3]);

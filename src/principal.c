@@ -14,6 +14,7 @@
 #include "espelha.h"
 #include "gira90.h"
 #include "pgm.h"
+#include "rgb_to_gray.h"
 
 // Alunos: Jean, Lucas e Ulysses 
 
@@ -184,7 +185,104 @@ int main(void) {
 
 		free(buf);
 		return(EXIT_SUCCESS);
+	}else if(choice == 3){
+		char ext[5] = ".bmp";
+		printf("Digite o nome do arquivo (sem a extensao): ");
+		scanf("%s", fname);
+		getchar();
+		printf("Digite o nome de saida do arquivo (sem a extensao): ");
+		scanf("%s", out);
+		getchar();
+
+		FILE *streamIn, *fo;
+
+		unsigned int i;
+		int sz;
+
+		streamIn = fopen(strcat(fname, ext), "rb");		/* Open the file */
+		if (streamIn == NULL) {
+			perror("fopen()");
+			exit(EXIT_FAILURE);
+		}
+
+		for (i = 0; i < HDRBMP; i++) {
+			header[i] = getc(streamIn);				/* Strip out BMP header, byte-wise */
+		}
+
+		if (gethd(&header[0], &hd)) {
+			fclose(streamIn);
+			perror("BMP header error");
+			exit(EXIT_FAILURE);
+		}
+		getinfohd(header, &infohd);
+
+		if (infohd.bits <= HDRBD) {
+			fread(colorTable, sizeof(unsigned char), HBMPCT, streamIn);
+		}
+
+		/* Avoid invalid requests */
+		if (infohd.height < 0 || infohd.width < 0)
+			perror("Overflow");
+
+		/* Check for signed int overflow */
+		if (infohd.height && infohd.width > INT_MAX / infohd.height)
+			perror("Overflow");
+
+		sz = infohd.height * infohd.width;
+		unsigned char buf[sz][3];
+		
+		/*Lendo imagem e armazenando em buf*/
+		for (i = 0; i < sz; i++) {
+			buf[i][0] = getc(streamIn);      // Blue
+			buf[i][1] = getc(streamIn);      // Green
+			buf[i][2] = getc(streamIn);      // Red
+		}
+		int filtro = 0;
+		int sair = 1;
+		while(sair == 1) {
+			exibirMenuRGB();
+			scanf("%d", &filtro);
+
+			switch(filtro) {
+				case 0:
+					sair = 0;
+					printf("Saindo do programa\n");
+					break;
+				case 1:
+					rgb_to_gray(infohd.width, infohd.height, buf);
+					printf("\nFiltro aplicado!\n");
+					break;
+				case 2:
+					sepia(infohd.width, infohd.height, buf);
+					printf("\nFiltro aplicado!\n");
+					break;
+				default:
+					printf("\nOpção invalida\n");
+					break;
+			}
+			printf("\nEscrevendo no arquivo %s\n", out);
+			if (strstr(out, ext) != NULL) {
+				fo = fopen(out, "wb");
+			}
+			
+			else {
+				fo = fopen(strcat(out, ext), "wb");			/* Open the file */
+			}
+
+			if (fo == NULL) {
+				perror("fopen()");
+				exit(EXIT_FAILURE);
+			}
+			fwrite(header, sizeof(unsigned char), HDRBMP, fo);
+			if (infohd.bits <= 8) {
+				fwrite(colorTable, sizeof(unsigned char), HBMPCT, fo);
+			}
+			fwrite(buf, sizeof(unsigned char), sz*3, fo);
+		}
+		fclose(fo);
+		fclose(streamIn);
 	}
+
 }
 
 /* Bitmap BGR to bitmap RGB (swaping R and B values) */

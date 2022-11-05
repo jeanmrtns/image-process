@@ -32,161 +32,159 @@ int main(void) {
 
 	char fname[50];
 	char out[50];
-	char ext[5] = ".bmp";
 
-	printf("PGM ou BMP? (1 ou 2)\n");
+	exibirMenuFormatos();
 	int choice;
 	scanf("%d", &choice);
 	getchar();
 	
 	if (choice == 1) {
-		PGMImage img;
-		printf("insira o nome do arquivo se for PGM\n");
-		char fnamePgm[50];
-		char pgmOut[50];
+		PGMData* data = malloc(sizeof(PGMData));
+		printf("Insira o nome do arquivo (sem a extensao): ");
 		scanf("%s", fname);
 		getchar();
+		printf("Digite o nome de saida do arquivo (sem a extensao): ");
+		scanf("%s", out);
+		getchar();
+    	readPGM(fname, &(*data));
+    	writePGM(out, &(*data));
+	}else if (choice == 2) {
+		char ext[5] = ".bmp";
+		printf("Digite o nome do arquivo (sem a extensao): ");
+		scanf("%s", fname);
+		getchar();
+		printf("Digite o nome de saida do arquivo (sem a extensao): ");
+		scanf("%s", out);
+		getchar();
 
-		getPGMfile(fname, &img);
-		save(&img, "saida.pgm");
+		unsigned char *buf;
 
-		exit(1);
-	}
+		FILE *streamIn, *fo;
 
-	printf("Digite o nome do arquivo (sem a extensao): ");
-	scanf("%s", fname);
-	getchar();
-	printf("Digite o nome de saida do arquivo (sem a extensao): ");
-	scanf("%s", out);
-	getchar();
+		unsigned int i;
+		double sz;
 
-	unsigned char *buf;
-
-	FILE *streamIn, *fo;
-
-	unsigned int i;
-	double sz;
-
-	streamIn = fopen(strcat(fname, ext), "rb");		/* Open the file */
-	if (streamIn == NULL) {
-		perror("fopen()");
-		exit(EXIT_FAILURE);
-	}
-
-	for (i = 0; i < HDRBMP; i++) {
-		header[i] = getc(streamIn);				/* Strip out BMP header, byte-wise */
-	}
-
-	if (gethd(&header[0], &hd)) {
-	    fclose(streamIn);
-	    perror("BMP header error");
-	    exit(EXIT_FAILURE);
-	}
-	getinfohd(header, &infohd);
-
-	if (infohd.bits <= HDRBD) {
-		fread(colorTable, sizeof(unsigned char), HBMPCT, streamIn);
-	}
-
-	/* Avoid invalid requests */
-	if (infohd.height < 0 || infohd.width < 0)
-	    perror("Overflow");
-
-	/* Check for signed int overflow */
-	if (infohd.height && infohd.width > INT_MAX / infohd.height)
-	    perror("Overflow");
-
-	sz = infohd.height * infohd.width;
-	buf = (unsigned char *) malloc(sz);	/* To store the image data */
-
-	if (buf == NULL) {
-		perror("malloc()");
-                exit(EXIT_FAILURE);
-	}
-	fread(buf, sizeof(unsigned char), sz, streamIn);
-
-	int j;
-	unsigned char matriz[infohd.height][infohd.width];
-	for (i=0; i<infohd.height; ++i)
-		for (j=0; j<infohd.width; ++j)
-			matriz[i][j] = buf[i*infohd.width+j];
-
-	int filtro = 0;
-	int sair = 1;
-	verifyDataLength(&infohd, streamIn);
-	maxmin(buf, sz);
-	
-	while(sair == 1) {
-		exibirMenu();
-		scanf("%d", &filtro);
-		
-		switch(filtro) {
-			case 0:
-				sair = 0;
-				printf("Saindo do programa\n");
-				break;
-			case 1:
-				set_border(infohd.width, infohd.height, matriz);
-				printf("\nBorda aplicada!\n");
-				break;
-			case 2:
-				negative(infohd.width, infohd.height, matriz);
-				printf("\nFiltro negativo aplicado!\n");
-				break;
-			case 3:
-				preto_branco(infohd.width, infohd.height, matriz);
-				printf("\nFiltro preto e branco aplicado!\n");
-				break;
-			case 4:
-				brilho(infohd.width, infohd.height, matriz);
-				printf("\nFiltro de brilho aplicado!\n");
-				break;
-			case 5:
-				gira180(infohd.width, infohd.height, matriz);
-				printf("\nImagem rotacionada!\n");
-				break;
-			case 6:
-				espelha(infohd.width, infohd.height, matriz);
-				printf("\nImagem espelhada!\n");
-				break;
-			case 7:
-				gira90(infohd.width, infohd.height, matriz);
-				printf("\nImagem rotacionada em 90 graus!\n");
-				break;
-			default:
-				printf("\nOpção invalida\n");
-				break;
-		}
-
-		printf("\nEscrevendo no arquivo %s\n", out);
-		if (strstr(out, ext) != NULL) {
-			fo = fopen(out, "wb");
-		}
-		
-		else {
-			fo = fopen(strcat(out, ext), "wb");			/* Open the file */
-		}
-
-		if (fo == NULL) {
+		streamIn = fopen(strcat(fname, ext), "rb");		/* Open the file */
+		if (streamIn == NULL) {
 			perror("fopen()");
 			exit(EXIT_FAILURE);
 		}
 
-		/* Write the image header to output file */
-		fwrite(header, sizeof(unsigned char), HDRBMP, fo);
-
-		if (infohd.bits <= 8) {
-			fwrite(colorTable, sizeof(unsigned char), HBMPCT, fo);
+		for (i = 0; i < HDRBMP; i++) {
+			header[i] = getc(streamIn);				/* Strip out BMP header, byte-wise */
 		}
 
-		fwrite(matriz, sizeof(unsigned char), sz, fo);
+		if (gethd(&header[0], &hd)) {
+			fclose(streamIn);
+			perror("BMP header error");
+			exit(EXIT_FAILURE);
+		}
+		getinfohd(header, &infohd);
 
+		if (infohd.bits <= HDRBD) {
+			fread(colorTable, sizeof(unsigned char), HBMPCT, streamIn);
+		}
+
+		/* Avoid invalid requests */
+		if (infohd.height < 0 || infohd.width < 0)
+			perror("Overflow");
+
+		/* Check for signed int overflow */
+		if (infohd.height && infohd.width > INT_MAX / infohd.height)
+			perror("Overflow");
+
+		sz = infohd.height * infohd.width;
+		buf = (unsigned char *) malloc(sz);	/* To store the image data */
+
+		if (buf == NULL) {
+			perror("malloc()");
+					exit(EXIT_FAILURE);
+		}
+		fread(buf, sizeof(unsigned char), sz, streamIn);
+
+		int j;
+		unsigned char matriz[infohd.height][infohd.width];
+		for (i=0; i<infohd.height; ++i)
+			for (j=0; j<infohd.width; ++j)
+				matriz[i][j] = buf[i*infohd.width+j];
+
+		int filtro = 0;
+		int sair = 1;
+		verifyDataLength(&infohd, streamIn);
+		maxmin(buf, sz);
+		
+		while(sair == 1) {
+			exibirMenu();
+			scanf("%d", &filtro);
+			
+			switch(filtro) {
+				case 0:
+					sair = 0;
+					printf("Saindo do programa\n");
+					break;
+				case 1:
+					set_border(infohd.width, infohd.height, matriz);
+					printf("\nBorda aplicada!\n");
+					break;
+				case 2:
+					negative(infohd.width, infohd.height, matriz);
+					printf("\nFiltro negativo aplicado!\n");
+					break;
+				case 3:
+					preto_branco(infohd.width, infohd.height, matriz);
+					printf("\nFiltro preto e branco aplicado!\n");
+					break;
+				case 4:
+					brilho(infohd.width, infohd.height, matriz);
+					printf("\nFiltro de brilho aplicado!\n");
+					break;
+				case 5:
+					gira180(infohd.width, infohd.height, matriz);
+					printf("\nImagem rotacionada!\n");
+					break;
+				case 6:
+					espelha(infohd.width, infohd.height, matriz);
+					printf("\nImagem espelhada!\n");
+					break;
+				case 7:
+					gira90(infohd.width, infohd.height, matriz);
+					printf("\nImagem rotacionada em 90 graus!\n");
+					break;
+				default:
+					printf("\nOpção invalida\n");
+					break;
+			}
+
+			printf("\nEscrevendo no arquivo %s\n", out);
+			if (strstr(out, ext) != NULL) {
+				fo = fopen(out, "wb");
+			}
+			
+			else {
+				fo = fopen(strcat(out, ext), "wb");			/* Open the file */
+			}
+
+			if (fo == NULL) {
+				perror("fopen()");
+				exit(EXIT_FAILURE);
+			}
+
+			/* Write the image header to output file */
+			fwrite(header, sizeof(unsigned char), HDRBMP, fo);
+
+			if (infohd.bits <= 8) {
+				fwrite(colorTable, sizeof(unsigned char), HBMPCT, fo);
+			}
+
+			fwrite(matriz, sizeof(unsigned char), sz, fo);
+
+		}
+		fclose(fo);
+		fclose(streamIn);
+
+		free(buf);
+		return(EXIT_SUCCESS);
 	}
-	fclose(fo);
-	fclose(streamIn);
-
-	free(buf);
-	return(EXIT_SUCCESS);
 }
 
 /* Bitmap BGR to bitmap RGB (swaping R and B values) */

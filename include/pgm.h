@@ -1,24 +1,9 @@
-/*max size of an image*/
-#define MAX 800
+typedef struct _PGMData {
+    int row;
+    int col;
+    int max_gray;
+    int **matrix;
+} PGMData;
 
-/*  
-#define LOW_VALUE 0 
-#define HIGH_VALUE 255
-*/
-
-
-/*RGB color struct with integral types*/
-typedef struct {unsigned char red;
-                unsigned char green;
-                unsigned char blue;
-               }RGB_INT;
-
-struct PGMstructure 
-{
-  int maxVal;
-  int width;
-  int height;
-  RGB_INT data[MAX][MAX];
-};
-
-typedef struct PGMstructure PGMImage;
+PGMData* readPGM(const char *file_name, PGMData *data);
+void writePGM(const char *filename, const PGMData *data);

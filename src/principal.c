@@ -15,6 +15,8 @@
 #include "gira90.h"
 #include "pgm.h"
 #include "rgb_to_gray.h"
+#include "sepia.h"
+#include "negative.h"
 
 // Alunos: Jean, Lucas e Ulysses 
 

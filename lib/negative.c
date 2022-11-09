@@ -1,4 +1,4 @@
-#include "negative.h";
+#include "negative.h"
 
 void negative(int width, int height, unsigned char matriz[width][height]) {
   int i, j;

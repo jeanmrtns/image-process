@@ -18,6 +18,7 @@
 #include "sepia.h"
 #include "negative.h"
 
+
 // Alunos: Jean, Lucas e Ulysses 
 
 /* Compilar com:
